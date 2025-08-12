@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ServerlessKit - From Zero to SaaS in Minutes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #6b46c1 0%, #4299e1 100%);
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-gray-900">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <svg class="h-8 w-8 text-indigo-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M13 7.5a1 1 0 11-2 0 1 1 0 012 0zm-1 3a1 1 0 100-2 1 1 0 000 2zm-1 3a1 1 0 11-2 0 1 1 0 012 0zm5 1a1 1 0 100-2 1 1 0 000 2zm1-3a1 1 0 11-2 0 1 1 0 012 0zm1-3a1 1 0 100-2 1 1 0 000 2z" />
+                            <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zM4 12a8 8 0 0116 0H4z" clip-rule="evenodd" />
+                        </svg>
+                        <span class="ml-2 text-xl font-bold text-gray-900">ServerlessKit</span>
+                    </div>
+                </div>
+                <div class="hidden sm:ml-6 sm:flex sm:items-center space-x-8">
+                    <a href="#features" class="text-gray-500 hover:text-gray-900 px-3 py-2 text-sm font-medium">Features</a>
+                    <a href="#how-it-works" class="text-gray-500 hover:text-gray-900 px-3 py-2 text-sm font-medium">How It Works</a>
+                    <a href="#pricing" class="text-gray-500 hover:text-gray-900 px-3 py-2 text-sm font-medium">Pricing</a>
+                    <a href="#waitlist" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium">Join Waitlist</a>
+                </div>
+                <div class="-mr-2 flex items-center sm:hidden">
+                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden sm:hidden bg-white border-t border-gray-200">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#features" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Features</a>
+                <a href="#how-it-works" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">How It Works</a>
+                <a href="#pricing" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Pricing</a>
+                <a href="#waitlist" class="block w-full text-center bg-indigo-600 text-white px-3 py-2 rounded-md text-base font-medium hover:bg-indigo-700">Join Waitlist</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="gradient-bg text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
+            <div class="md:flex md:items-center md:justify-between">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-6">Launch Your SaaS in Minutes, Not Months.</h1>
+                    <p class="text-xl md:text-2xl text-indigo-100 mb-8">The AWS-native, API-first, multi-tenant boilerplate that gives you RBAC, SSO, Stripe metering, analytics, and cost tracking — from day one.</p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a href="#waitlist" class="pulse bg-white text-indigo-600 hover:bg-gray-100 px-8 py-4 rounded-lg text-lg font-bold text-center shadow-lg transform transition duration-300">🚀 Join the Waiting List – Be First to Deploy</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 md:pl-10">
+                    <div class="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-xl p-6 border border-white border-opacity-20">
+                        <div class="flex items-center mb-4">
+                            <div class="h-3 w-3 bg-red-500 rounded-full mr-2"></div>
+                            <div class="h-3 w-3 bg-yellow-500 rounded-full mr-2"></div>
+                            <div class="h-3 w-3 bg-green-500 rounded-full"></div>
+                        </div>
+                        <div class="bg-gray-900 rounded-lg p-4 overflow-hidden">
+                            <pre class="text-green-400 text-sm overflow-x-auto"><code># Deploy your SaaS with one command
+$ serverlesskit deploy --mode=hosted
+
+✔ Creating AWS resources
+✔ Configuring multi-tenant auth
+✔ Setting up Stripe metering
+✔ Deploying analytics dashboard
+
+🚀 Your SaaS is live at https://your-app.serverlesskit.com</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Value Proposition -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Stop wasting months on boilerplate.</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">ServerlessKit delivers a production-ready SaaS stack in one click — hosted on our AWS or yours.</p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="features">
+            <div class="feature-card bg-white p-8 rounded-xl shadow-md transition duration-300">
+                <div class="text-indigo-600 mb-4">
+                    <i class="fas fa-bolt text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Serverless Core</h3>
+                <p class="text-gray-600">FastAPI + Pydantic on AWS Lambda & API Gateway. Built for scale with zero server management.</p>
+            </div>
+            
+            <div class="feature-card bg-white p-8 rounded-xl shadow-md transition duration-300">
+                <div class="text-indigo-600 mb-4">
+                    <i class="fas fa-shield-alt text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">RBAC & SSO Ready</h3>
+                <p class="text-gray-600">Multi-tenant Cognito + Cerbos role management. Enterprise-grade security from day one.</p>
+            </div>
+            
+            <div class="feature-card bg-white p-8 rounded-xl shadow-md transition duration-300">
+                <div class="text-indigo-600 mb-4">
+                    <i class="fas fa-credit-card text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Stripe Metering</h3>
+                <p class="text-gray-600">Your SaaS, your customers, your revenue. Integrated billing with usage-based pricing.</p>
+            </div>
+            
+            <div class="feature-card bg-white p-8 rounded-xl shadow-md transition duration-300">
+                <div class="text-indigo-600 mb-4">
+                    <i class="fas fa-chart-line text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Built-In Analytics</h3>
+                <p class="text-gray-600">Umami from day one — see what's working instantly without additional setup.</p>
+            </div>
+            
+            <div class="feature-card bg-white p-8 rounded-xl shadow-md transition duration-300">
+                <div class="text-indigo-600 mb-4">
+                    <i class="fas fa-dollar-sign text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Cost Insights</h3>
+                <p class="text-gray-600">Track AWS usage per tenant, even on BYOC. Never get surprised by your cloud bill.</p>
+            </div>
+            
+            <div class="feature-card bg-white p-8 rounded-xl shadow-md transition duration-300">
+                <div class="text-indigo-600 mb-4">
+                    <i class="fas fa-robot text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Fully Automated</h3>
+                <p class="text-gray-600">No AWS experience needed. Infrastructure as code with CI/CD pipelines pre-configured.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Why It Matters -->
+    <div class="bg-gray-50 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Why ServerlessKit Matters</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">The ROI of skipping months of boilerplate development</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <div>
+                    <div class="flex items-start mb-8">
+                        <div class="flex-shrink-0 bg-indigo-100 rounded-lg p-3 mr-4">
+                            <i class="fas fa-money-bill-wave text-indigo-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">💰 Save 6–9 months of dev time</h3>
+                            <p class="text-gray-600">Focus on your unique value instead of rebuilding auth, billing, and analytics for the nth time.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start mb-8">
+                        <div class="flex-shrink-0 bg-indigo-100 rounded-lg p-3 mr-4">
+                            <i class="fas fa-shield-alt text-indigo-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">🛡 Built-in compliance guardrails</h3>
+                            <p class="text-gray-600">SOC2-ready architecture with multi-tenant isolation and audit logging pre-configured.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="flex items-start mb-8">
+                        <div class="flex-shrink-0 bg-indigo-100 rounded-lg p-3 mr-4">
+                            <i class="fas fa-rocket text-indigo-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">📈 Unlock revenue faster</h3>
+                            <p class="text-gray-600">Stripe metering + automated onboarding means you can start charging customers immediately.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 bg-indigo-100 rounded-lg p-3 mr-4">
+                            <i class="fas fa-expand text-indigo-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">♻ Future-proof architecture</h3>
+                            <p class="text-gray-600">Scale to millions of users with AWS-native serverless patterns that won't break under load.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- How It Works -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16" id="how-it-works">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">How It Works</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">From signup to production in four simple steps</p>
+        </div>
+        
+        <div class="grid md:grid-cols-4 gap-8">
+            <div class="text-center">
+                <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span class="text-indigo-600 font-bold text-xl">1</span>
+                </div>
+                <h3 class="text-lg font-bold mb-2">Sign up</h3>
+                <p class="text-gray-600">Join the waiting list for early access.</p>
+            </div>
+            
+            <div class="text-center">
+                <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span class="text-indigo-600 font-bold text-xl">2</span>
+                </div>
+                <h3 class="text-lg font-bold mb-2">Choose your mode</h3>
+                <p class="text-gray-600">Hosted (on our AWS) or BYOC (your AWS).</p>
+            </div>
+            
+            <div class="text-center">
+                <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span class="text-indigo-600 font-bold text-xl">3</span>
+                </div>
+                <h3 class="text-lg font-bold mb-2">One click deploy</h3>
+                <p class="text-gray-600">Fully configured SaaS environment.</p>
+            </div>
+            
+            <div class="text-center">
+                <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span class="text-indigo-600 font-bold text-xl">4</span>
+                </div>
+                <h3 class="text-lg font-bold mb-2">Go live</h3>
+                <p class="text-gray-600">Invite teams, onboard customers, start billing.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOMO Play -->
+    <div class="bg-indigo-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">Limited Time Offers</h2>
+                <p class="text-xl text-indigo-200 max-w-3xl mx-auto">Join now to secure these exclusive benefits</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8" id="pricing">
+                <div class="bg-white bg-opacity-10 rounded-xl p-8 border border-white border-opacity-20">
+                    <div class="text-yellow-400 mb-4">
+                        <i class="fas fa-crown text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Founders Offer</h3>
+                    <p class="text-indigo-200 mb-6">First 100 early adopters get 20% off for 12 months.</p>
+                    <div class="text-4xl font-bold mb-4">$800<span class="text-lg">/mo</span></div>
+                    <p class="text-sm text-indigo-200 mb-6">Normally $1,000/mo</p>
+                </div>
+                
+                <div class="bg-white bg-opacity-10 rounded-xl p-8 border border-white border-opacity-20">
+                    <div class="text-green-400 mb-4">
+                        <i class="fas fa-code text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">OSS Discount</h3>
+                    <p class="text-indigo-200 mb-6">30% off for open-source projects.</p>
+                    <div class="text-4xl font-bold mb-4">$700<span class="text-lg">/mo</span></div>
+                    <p class="text-sm text-indigo-200 mb-6">Normally $1,000/mo</p>
+                </div>
+                
+                <div class="bg-white bg-opacity-10 rounded-xl p-8 border border-white border-opacity-20">
+                    <div class="text-blue-400 mb-4">
+                        <i class="fas fa-exchange-alt text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Switch Credit</h3>
+                    <p class="text-indigo-200 mb-6">Migrating from another boilerplate? We'll credit your remaining months.</p>
+                    <div class="text-4xl font-bold mb-4">$500<span class="text-lg">/mo</span></div>
+                    <p class="text-sm text-indigo-200 mb-6">First 3 months</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Social Proof -->
+    <div class="bg-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Trusted by Innovators</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Built on AWS. Designed for scale.</p>
+            </div>
+            
+            <div class="flex flex-wrap justify-center items-center gap-12">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/1200px-Amazon_Web_Services_Logo.svg.png" alt="AWS" class="h-12 opacity-80 hover:opacity-100 transition">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Stripe_Logo%2C_revised_2016.svg/2560px-Stripe_Logo%2C_revised_2016.svg.png" alt="Stripe" class="h-8 opacity-80 hover:opacity-100 transition">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Laravel.svg/1200px-Laravel.svg.png" alt="Open Source" class="h-10 opacity-80 hover:opacity-100 transition">
+            </div>
+        </div>
+    </div>
+
+    <!-- Final CTA -->
+    <div class="gradient-bg text-white py-16" id="waitlist">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Your SaaS could be live next week.</h2>
+            <p class="text-xl text-indigo-100 mb-8">Don't waste another sprint on boilerplate. Join the first 100 and get early adopter benefits.</p>
+            <a href="#" class="inline-block bg-white text-indigo-600 hover:bg-gray-100 px-8 py-4 rounded-lg text-lg font-bold shadow-lg transform transition duration-300">🚀 Join the Waiting List Now</a>
+            <p class="mt-4 text-indigo-200">Spots remaining: 42/100</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-bold mb-4">ServerlessKit</h3>
+                    <p class="text-gray-400">From Zero to SaaS in Minutes. API-First, AWS-Native, Multi-Tenant.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Product</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#features" class="text-gray-400 hover:text-white">Features</a></li>
+                        <li><a href="#how-it-works" class="text-gray-400 hover:text-white">How It Works</a></li>
+                        <li><a href="#pricing" class="text-gray-400 hover:text-white">Pricing</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Resources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Documentation</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Support</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Connect</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-github text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-discord text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin text-xl"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 mb-4 md:mb-0">© 2023 ServerlessKit. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white">Terms</a>
+                    <a href="#" class="text-gray-400 hover:text-white">Privacy</a>
+                    <a href="#" class="text-gray-400 hover:text-white">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Countdown timer for FOMO
+        function updateCountdown() {
+            const now = new Date();
+            const launchDate = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+            const diff = launchDate - now;
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('countdown-timer').textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
+        
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Animate elements when they come into view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fadeIn');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.feature-card, .gradient-bg, .bg-gray-50').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
