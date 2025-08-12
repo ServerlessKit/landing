@@ -4,6 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ServerlessKit - From Zero to SaaS in Minutes</title>
+    <meta name="description" content="Deploy production-ready SaaS applications in minutes with ServerlessKit. AWS-native, multi-tenant architecture with built-in auth, billing, and analytics.">
+    <meta name="keywords" content="serverless, saas, aws, lambda, fastapi, multi-tenant, authentication, billing, stripe">
+    <meta name="author" content="ServerlessKit">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://serverlesskit.com/">
+    <meta property="og:title" content="ServerlessKit - From Zero to SaaS in Minutes">
+    <meta property="og:description" content="Deploy production-ready SaaS applications in minutes with ServerlessKit. AWS-native, multi-tenant architecture with built-in auth, billing, and analytics.">
+    <meta property="og:image" content="https://serverlesskit.com/og-image.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://serverlesskit.com/">
+    <meta property="twitter:title" content="ServerlessKit - From Zero to SaaS in Minutes">
+    <meta property="twitter:description" content="Deploy production-ready SaaS applications in minutes with ServerlessKit. AWS-native, multi-tenant architecture with built-in auth, billing, and analytics.">
+    <meta property="twitter:image" content="https://serverlesskit.com/og-image.png">
+    <meta property="twitter:site" content="@serverlesskit1">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -536,20 +561,105 @@ $ serverlesskit deploy --mode=hosted
             menu.classList.toggle('hidden');
         });
 
+        // Google Sheets Integration
+        // TODO: Replace this URL with your actual Google Apps Script Web App URL
+        const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID_HERE/exec';
+
+        // Waitlist form submission
+        document.getElementById('waitlistForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('submitBtn');
+            const formMessage = document.getElementById('formMessage');
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+
+            // Get form data
+            const formData = new FormData(this);
+            const data = {
+                email: formData.get('email'),
+                name: formData.get('name') || '',
+                company: formData.get('company') || '',
+                useCase: formData.get('useCase') || '',
+                timestamp: new Date().toISOString(),
+                source: 'ServerlessKit Landing Page'
+            };
+
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = '⏳ Joining...';
+
+            // Hide previous messages
+            formMessage.classList.add('hidden');
+            successMessage.classList.add('hidden');
+            errorMessage.classList.add('hidden');
+
+            try {
+                // Submit to Google Sheets
+                const response = await fetch(GOOGLE_SHEETS_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                // Show success message
+                formMessage.classList.remove('hidden');
+                successMessage.classList.remove('hidden');
+
+                // Reset form
+                this.reset();
+
+                // Track conversion (if analytics available)
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'conversion', {
+                        'send_to': 'AW-CONVERSION_ID/CONVERSION_LABEL',
+                        'value': 1.0,
+                        'currency': 'USD'
+                    });
+                }
+
+                // Update progress bar (simulate)
+                const progressBar = document.querySelector('.bg-\\[\\#7EB5D6\\]');
+                if (progressBar) {
+                    const currentWidth = parseInt(progressBar.style.width) || 58;
+                    const newWidth = Math.min(currentWidth + 1, 95);
+                    progressBar.style.width = newWidth + '%';
+                    document.querySelector('.text-indigo-200').textContent = `${newWidth}% of early access spots claimed`;
+                }
+
+            } catch (error) {
+                console.error('Error submitting form:', error);
+
+                // Show error message
+                formMessage.classList.remove('hidden');
+                errorMessage.classList.remove('hidden');
+            } finally {
+                // Reset button state
+                submitBtn.disabled = false;
+                submitBtn.textContent = '🚀 Join the Waitlist';
+            }
+        });
+
         // Countdown timer for FOMO
         function updateCountdown() {
             const now = new Date();
             const launchDate = new Date(now.getFullYear(), now.getMonth() + 1, 1);
             const diff = launchDate - now;
-            
+
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
             const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-            
-            document.getElementById('countdown-timer').textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+            const countdownElement = document.getElementById('countdown-timer');
+            if (countdownElement) {
+                countdownElement.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            }
         }
-        
+
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
