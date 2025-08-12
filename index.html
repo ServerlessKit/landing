@@ -634,20 +634,8 @@ $ serverlesskit deploy --mode=hosted
             successMessage.classList.add('hidden');
             errorMessage.classList.add('hidden');
 
-            // Show success message immediately for better UX (optimistic UI)
-            setTimeout(() => {
-                formMessage.classList.remove('hidden');
-                successMessage.classList.remove('hidden');
-                this.reset();
-
-                // Reset button state
-                submitBtn.disabled = false;
-                submitBtnText.textContent = '🚀 Join the Waitlist';
-                submitBtnSpinner.classList.add('hidden');
-            }, 500); // Fast feedback
-
             try {
-                // Submit to Google Sheets in background
+                // Submit to Google Sheets with proper error handling
                 const submissionData = new FormData();
                 submissionData.append('email', data.email);
                 submissionData.append('name', data.name);
@@ -656,26 +644,57 @@ $ serverlesskit deploy --mode=hosted
                 submissionData.append('timestamp', data.timestamp);
                 submissionData.append('source', data.source);
 
-                // Use fetch with timeout for better performance
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+                console.log('Submitting form data:', {
+                    email: data.email,
+                    name: data.name,
+                    company: data.company,
+                    useCase: data.useCase,
+                    timestamp: data.timestamp,
+                    source: data.source
+                });
 
-                fetch(GOOGLE_SHEETS_URL, {
+                // Use fetch with proper timeout and error handling
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
+                const response = await fetch(GOOGLE_SHEETS_URL, {
                     method: 'POST',
                     body: submissionData,
                     signal: controller.signal
-                }).then(() => {
-                    clearTimeout(timeoutId);
-                    console.log('Form submitted to Google Sheets successfully');
-                }).catch((error) => {
-                    clearTimeout(timeoutId);
-                    console.warn('Google Sheets submission failed (but user already saw success):', error);
-                    // Don't show error to user since they already saw success
                 });
+
+                clearTimeout(timeoutId);
+                console.log('Response received:', response.status, response.statusText);
+
+                // For Google Apps Script, we can't always read the response due to CORS
+                // But if we get here without an error, the submission likely succeeded
+
+                // Show success message
+                formMessage.classList.remove('hidden');
+                successMessage.classList.remove('hidden');
+                this.reset();
+
+                console.log('Form submitted successfully to Google Sheets');
 
             } catch (error) {
                 console.error('Form submission error:', error);
-                // User already saw success message, so don't disrupt their experience
+
+                // Show error message
+                formMessage.classList.remove('hidden');
+                errorMessage.classList.remove('hidden');
+
+                // Update error message with more specific info
+                const errorText = errorMessage.querySelector('p:last-child');
+                if (error.name === 'AbortError') {
+                    errorText.textContent = 'Request timed out. Please try again.';
+                } else {
+                    errorText.textContent = 'Network error. Please check your connection and try again.';
+                }
+            } finally {
+                // Reset button state
+                submitBtn.disabled = false;
+                submitBtnText.textContent = '🚀 Join the Waitlist';
+                submitBtnSpinner.classList.add('hidden');
             }
 
         });

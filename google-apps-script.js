@@ -22,13 +22,19 @@ const SHEET_NAME = 'Waitlist Signups';
  */
 function doPost(e) {
   try {
+    // Log the incoming request for debugging
+    console.log('Received POST request:', e);
+    console.log('Post data type:', e.postData ? e.postData.type : 'No postData');
+    console.log('Parameters:', e.parameter);
+
     let data;
 
     // Handle both JSON and FormData submissions
-    if (e.postData.type === 'application/json') {
+    if (e.postData && e.postData.type === 'application/json') {
       data = JSON.parse(e.postData.contents);
+      console.log('Parsed JSON data:', data);
     } else {
-      // Handle FormData
+      // Handle FormData (most common from web forms)
       data = {
         email: e.parameter.email || '',
         name: e.parameter.name || '',
@@ -37,10 +43,12 @@ function doPost(e) {
         timestamp: e.parameter.timestamp || new Date().toISOString(),
         source: e.parameter.source || 'ServerlessKit Landing Page'
       };
+      console.log('Parsed FormData:', data);
     }
 
     // Validate required fields
-    if (!data.email) {
+    if (!data.email || data.email.trim() === '') {
+      console.log('Validation failed: No email provided');
       return ContentService
         .createTextOutput(JSON.stringify({
           success: false,
@@ -48,15 +56,32 @@ function doPost(e) {
         }))
         .setMimeType(ContentService.MimeType.JSON);
     }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(data.email)) {
+      console.log('Validation failed: Invalid email format');
+      return ContentService
+        .createTextOutput(JSON.stringify({
+          success: false,
+          error: 'Invalid email format'
+        }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
     
     // Get or create the spreadsheet
+    console.log('Attempting to open spreadsheet with ID:', SPREADSHEET_ID);
     const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
+    console.log('Spreadsheet opened successfully');
+
     let sheet = spreadsheet.getSheetByName(SHEET_NAME);
-    
+    console.log('Looking for sheet:', SHEET_NAME);
+
     // Create sheet if it doesn't exist
     if (!sheet) {
+      console.log('Sheet not found, creating new sheet:', SHEET_NAME);
       sheet = spreadsheet.insertSheet(SHEET_NAME);
-      
+
       // Add headers
       const headers = [
         'Timestamp',
@@ -69,12 +94,16 @@ function doPost(e) {
         'User Agent'
       ];
       sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
-      
+      console.log('Headers added to new sheet');
+
       // Format headers
       const headerRange = sheet.getRange(1, 1, 1, headers.length);
       headerRange.setFontWeight('bold');
       headerRange.setBackground('#4285f4');
       headerRange.setFontColor('white');
+      console.log('Header formatting applied');
+    } else {
+      console.log('Sheet found:', sheet.getName());
     }
     
     // Prepare row data
@@ -85,31 +114,46 @@ function doPost(e) {
       data.company || '',
       data.useCase || '',
       data.source || 'Unknown',
-      e.parameter.userIp || 'Unknown',
-      e.parameter.userAgent || 'Unknown'
+      'N/A', // IP Address (not available in current setup)
+      'N/A'  // User Agent (not available in current setup)
     ];
-    
-    // Check for duplicate emails
+
+    console.log('Prepared row data:', rowData);
+
+    // Check for duplicate emails (optional - can be disabled for testing)
     const emailColumn = 2; // Email is in column B (index 2)
-    const dataRange = sheet.getDataRange();
-    const values = dataRange.getValues();
-    
-    for (let i = 1; i < values.length; i++) { // Start from 1 to skip headers
-      if (values[i][emailColumn - 1] === data.email) {
-        return ContentService
-          .createTextOutput(JSON.stringify({
-            success: false,
-            error: 'Email already registered'
-          }))
-          .setMimeType(ContentService.MimeType.JSON);
+    try {
+      const dataRange = sheet.getDataRange();
+      const values = dataRange.getValues();
+      console.log('Checking for duplicates in', values.length, 'rows');
+
+      for (let i = 1; i < values.length; i++) { // Start from 1 to skip headers
+        if (values[i][emailColumn - 1] === data.email) {
+          console.log('Duplicate email found:', data.email);
+          return ContentService
+            .createTextOutput(JSON.stringify({
+              success: false,
+              error: 'Email already registered'
+            }))
+            .setMimeType(ContentService.MimeType.JSON);
+        }
       }
+    } catch (duplicateCheckError) {
+      console.log('Error checking duplicates (continuing anyway):', duplicateCheckError);
     }
-    
+
     // Add the new row
+    console.log('Adding new row to sheet');
     sheet.appendRow(rowData);
-    
+    console.log('Row added successfully');
+
     // Auto-resize columns for better readability
-    sheet.autoResizeColumns(1, rowData.length);
+    try {
+      sheet.autoResizeColumns(1, rowData.length);
+      console.log('Columns auto-resized');
+    } catch (resizeError) {
+      console.log('Error resizing columns (non-critical):', resizeError);
+    }
     
     // Send confirmation email (optional)
     try {
@@ -229,25 +273,57 @@ AWS-Native • Multi-Tenant • Production-Ready
  * Test function to verify the script works
  */
 function testScript() {
+  console.log('Starting test script...');
+
   const testData = {
-    email: 'test@example.com',
+    email: 'test@serverlesskit.com',
     name: 'Test User',
     company: 'Test Company',
     useCase: 'startup',
     timestamp: new Date().toISOString(),
-    source: 'Test'
+    source: 'Test Script'
   };
-  
+
   const mockEvent = {
-    postData: {
-      contents: JSON.stringify(testData)
-    },
     parameter: {
-      userIp: '127.0.0.1',
-      userAgent: 'Test Agent'
+      email: testData.email,
+      name: testData.name,
+      company: testData.company,
+      useCase: testData.useCase,
+      timestamp: testData.timestamp,
+      source: testData.source
     }
   };
-  
+
+  console.log('Mock event:', mockEvent);
+
   const result = doPost(mockEvent);
   console.log('Test result:', result.getContent());
+
+  return result.getContent();
+}
+
+/**
+ * Simple test to check if we can access the spreadsheet
+ */
+function testSpreadsheetAccess() {
+  try {
+    console.log('Testing spreadsheet access...');
+    const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
+    console.log('Spreadsheet name:', spreadsheet.getName());
+
+    let sheet = spreadsheet.getSheetByName(SHEET_NAME);
+    if (!sheet) {
+      console.log('Sheet not found, creating it...');
+      sheet = spreadsheet.insertSheet(SHEET_NAME);
+    }
+
+    console.log('Sheet name:', sheet.getName());
+    console.log('Sheet has', sheet.getLastRow(), 'rows');
+
+    return 'Spreadsheet access successful';
+  } catch (error) {
+    console.error('Spreadsheet access failed:', error);
+    return 'Spreadsheet access failed: ' + error.toString();
+  }
 }
