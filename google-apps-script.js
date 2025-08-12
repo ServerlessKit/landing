@@ -22,9 +22,23 @@ const SHEET_NAME = 'Waitlist Signups';
  */
 function doPost(e) {
   try {
-    // Parse the request data
-    const data = JSON.parse(e.postData.contents);
-    
+    let data;
+
+    // Handle both JSON and FormData submissions
+    if (e.postData.type === 'application/json') {
+      data = JSON.parse(e.postData.contents);
+    } else {
+      // Handle FormData
+      data = {
+        email: e.parameter.email || '',
+        name: e.parameter.name || '',
+        company: e.parameter.company || '',
+        useCase: e.parameter.useCase || '',
+        timestamp: e.parameter.timestamp || new Date().toISOString(),
+        source: e.parameter.source || 'ServerlessKit Landing Page'
+      };
+    }
+
     // Validate required fields
     if (!data.email) {
       return ContentService

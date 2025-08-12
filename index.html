@@ -289,144 +289,148 @@ $ serverlesskit deploy --mode=hosted
     </div>
 
     <!-- Pricing Section -->
-    <div class="bg-[#232F3E] text-white py-16">
+    <div id="pricing" class="bg-[#232F3E] text-white py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-bold mb-4">Simple, Predictable Pricing</h2>
                 <p class="text-xl text-[#7EB5D6] max-w-3xl mx-auto">Choose the option that fits your needs</p>
             </div>
 
-            <div class="mb-16">
-                <h3 class="text-2xl font-bold mb-6 text-center">1. Hosted – On Our AWS</h3>
-                <p class="text-center text-[#7EB5D6] mb-8">Fastest launch, zero AWS setup. We handle the infrastructure. You focus on your product.</p>
-                
-                <div class="grid md:grid-cols-4 gap-6">
-                    <div class="bg-[#37475A] rounded-lg p-6 border border-[#546979] hover:border-[#7EB5D6] hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-                        <h4 class="font-bold text-lg mb-2">Dev</h4>
-                        <div class="text-2xl font-bold mb-2">$299<span class="text-base">/mo</span></div>
-                        <p class="text-sm text-[#7EB5D6] mb-4">50k API calls included</p>
-                        <p class="text-sm mb-4">$1 / 1k overages</p>
-                        <ul class="text-sm space-y-2">
-                            <li>1 environment</li>
-                            <li>Shared cluster</li>
-                            <li>Email support</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="bg-[#37475A] rounded-lg p-6 border border-[#546979]">
-                        <h4 class="font-bold text-lg mb-2">Team</h4>
-                        <div class="text-2xl font-bold mb-2">$799<span class="text-base">/mo</span></div>
-                        <p class="text-sm text-[#7EB5D6] mb-4">250k API calls included</p>
-                        <p class="text-sm mb-4">$0.80 / 1k overages</p>
-                        <ul class="text-sm space-y-2">
-                            <li>2 environments</li>
-                            <li>Custom domain</li>
-                            <li>Priority support</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="bg-[#37475A] rounded-lg p-6 border border-[#546979]">
-                        <h4 class="font-bold text-lg mb-2">Business</h4>
-                        <div class="text-2xl font-bold mb-2">$1,499<span class="text-base">/mo</span></div>
-                        <p class="text-sm text-[#7EB5D6] mb-4">1M API calls included</p>
-                        <p class="text-sm mb-4">$0.50 / 1k overages</p>
-                        <ul class="text-sm space-y-2">
-                            <li>3 environments</li>
-                            <li>Advanced modules toggle</li>
-                            <li>24h support</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="bg-[#37475A] rounded-lg p-6 border border-[#546979]">
-                        <h4 class="font-bold text-lg mb-2">Enterprise</h4>
-                        <div class="text-2xl font-bold mb-2">$2,999+<span class="text-base">/mo</span></div>
-                        <p class="text-sm text-[#7EB5D6] mb-4">2.5M+ API calls</p>
-                        <p class="text-sm mb-4">Volume discounts</p>
-                        <ul class="text-sm space-y-2">
-                            <li>Dedicated VPC/peering</li>
-                            <li>SSO integration</li>
-                            <li>SLAs</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
+            <!-- Pricing Tabs -->
             <div class="mb-8">
-                <h3 class="text-2xl font-bold mb-6 text-center">2. BYOC – On Your AWS</h3>
-                <p class="text-center text-[#7EB5D6] mb-8">Full control, keep your own bills. Fully automated deployment to your AWS account — no AWS expertise required.</p>
-                
-                <div class="grid md:grid-cols-4 gap-6">
-                    <div class="bg-[#37475A] rounded-lg p-6 border border-[#546979]">
-                        <h4 class="font-bold text-lg mb-2">Starter</h4>
-                        <div class="text-2xl font-bold mb-2">$199<span class="text-base">/mo</span></div>
-                        <p class="text-sm text-[#7EB5D6] mb-4">For Solo/POC</p>
-                        <ul class="text-sm space-y-2">
-                            <li>Core stack (API GW + Lambda + DynamoDB + Cognito + S3/CF)</li>
-                            <li>Stripe metering + Umami</li>
-                            <li>One-click deploy</li>
-                            <li>Community support</li>
-                            <li>1 project</li>
-                        </ul>
+                <div class="flex justify-center mb-8">
+                    <div class="bg-[#37475A] rounded-lg p-1 flex">
+                        <button id="hosted-tab" class="px-6 py-3 rounded-md text-sm font-medium transition-all duration-200 bg-[#FF9900] text-[#232F3E]">
+                            Hosted
+                        </button>
+                        <button id="byoc-tab" class="px-6 py-3 rounded-md text-sm font-medium transition-all duration-200 text-[#7EB5D6] hover:text-white">
+                            BYOC
+                        </button>
                     </div>
-                    
-                    <div class="bg-[#37475A] rounded-lg p-6 border border-[#546979]">
-                        <h4 class="font-bold text-lg mb-2">Growth</h4>
-                        <div class="text-2xl font-bold mb-2">$499<span class="text-base">/mo</span></div>
-                        <p class="text-sm text-[#7EB5D6] mb-4">For Small teams</p>
-                        <ul class="text-sm space-y-2">
-                            <li>Everything in Starter + Cerbos RBAC</li>
-                            <li>Installer wizard, CLI, SDKs (TS/Py)</li>
-                            <li>3 projects</li>
-                            <li>Email support (48h)</li>
-                            <li>Security patches</li>
-                        </ul>
+                </div>
+
+                <!-- Hosted Pricing Content -->
+                <div id="hosted-content" class="pricing-content">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold mb-4">Hosted – On Our AWS</h3>
+                        <p class="text-[#7EB5D6] max-w-2xl mx-auto">Fastest launch, zero AWS setup. We handle the infrastructure. You focus on your product.</p>
                     </div>
-                    
-                    <div class="bg-[#37475A] rounded-lg p-6 border border-[#546979]">
-                        <h4 class="font-bold text-lg mb-2">Scale</h4>
-                        <div class="text-2xl font-bold mb-2">$999<span class="text-base">/mo</span></div>
-                        <p class="text-sm text-[#7EB5D6] mb-4">For Agencies/multi-apps</p>
-                        <ul class="text-sm space-y-2">
-                            <li>Unlimited projects</li>
-                            <li>Advanced modules (Temporal/RDS, Meilisearch)</li>
-                            <li>Priority support (24h)</li>
-                            <li>CI/CD templates</li>
-                            <li>Cost guardrails</li>
-                        </ul>
+
+                    <div class="grid md:grid-cols-4 gap-6">
+                        <div class="bg-[#37475A] rounded-lg p-6 border border-[#546979] hover:border-[#7EB5D6] hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                            <h4 class="font-bold text-lg mb-2">Dev</h4>
+                            <div class="text-2xl font-bold mb-2">$299<span class="text-base">/mo</span></div>
+                            <p class="text-sm text-[#7EB5D6] mb-4">50k API calls included</p>
+                            <p class="text-sm mb-4">$1 / 1k overages</p>
+                            <ul class="text-sm space-y-2">
+                                <li>1 environment</li>
+                                <li>Shared cluster</li>
+                                <li>Email support</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-[#37475A] rounded-lg p-6 border border-[#546979]">
+                            <h4 class="font-bold text-lg mb-2">Team</h4>
+                            <div class="text-2xl font-bold mb-2">$799<span class="text-base">/mo</span></div>
+                            <p class="text-sm text-[#7EB5D6] mb-4">250k API calls included</p>
+                            <p class="text-sm mb-4">$0.80 / 1k overages</p>
+                            <ul class="text-sm space-y-2">
+                                <li>2 environments</li>
+                                <li>Custom domain</li>
+                                <li>Priority support</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-[#37475A] rounded-lg p-6 border border-[#546979]">
+                            <h4 class="font-bold text-lg mb-2">Business</h4>
+                            <div class="text-2xl font-bold mb-2">$1,499<span class="text-base">/mo</span></div>
+                            <p class="text-sm text-[#7EB5D6] mb-4">1M API calls included</p>
+                            <p class="text-sm mb-4">$0.50 / 1k overages</p>
+                            <ul class="text-sm space-y-2">
+                                <li>3 environments</li>
+                                <li>Advanced modules toggle</li>
+                                <li>24h support</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-[#37475A] rounded-lg p-6 border border-[#546979]">
+                            <h4 class="font-bold text-lg mb-2">Enterprise</h4>
+                            <div class="text-2xl font-bold mb-2">$2,999+<span class="text-base">/mo</span></div>
+                            <p class="text-sm text-[#7EB5D6] mb-4">2.5M+ API calls</p>
+                            <p class="text-sm mb-4">Volume discounts</p>
+                            <ul class="text-sm space-y-2">
+                                <li>Dedicated VPC/peering</li>
+                                <li>SSO integration</li>
+                                <li>SLAs</li>
+                            </ul>
+                        </div>
                     </div>
-                    
-                    <div class="bg-[#37475A] rounded-lg p-6 border border-[#546979]">
-                        <h4 class="font-bold text-lg mb-2">Enterprise</h4>
-                        <div class="text-2xl font-bold mb-2">$1,999+<span class="text-base">/mo</span></div>
-                        <p class="text-sm text-[#7EB5D6] mb-4">For Compliance/large orgs</p>
-                        <ul class="text-sm space-y-2">
-                            <li>All Scale features</li>
-                            <li>SSO/SCIM integration</li>
-                            <li>Private registry</li>
-                            <li>Architecture reviews</li>
-                            <li>SLAs</li>
-                        </ul>
+                </div>
+
+                <!-- BYOC Pricing Content -->
+                <div id="byoc-content" class="pricing-content hidden">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold mb-4">BYOC – On Your AWS</h3>
+                        <p class="text-[#7EB5D6] max-w-2xl mx-auto">Full control, keep your own bills. Fully automated deployment to your AWS account — no AWS expertise required.</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-4 gap-6">
+                        <div class="bg-[#37475A] rounded-lg p-6 border border-[#546979] hover:border-[#7EB5D6] hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                            <h4 class="font-bold text-lg mb-2">Starter</h4>
+                            <div class="text-2xl font-bold mb-2">$199<span class="text-base">/mo</span></div>
+                            <p class="text-sm text-[#7EB5D6] mb-4">For Solo/POC</p>
+                            <ul class="text-sm space-y-2">
+                                <li>Core stack (API GW + Lambda + DynamoDB + Cognito + S3/CF)</li>
+                                <li>Stripe metering + Umami</li>
+                                <li>One-click deploy</li>
+                                <li>Community support</li>
+                                <li>1 project</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-[#37475A] rounded-lg p-6 border border-[#546979]">
+                            <h4 class="font-bold text-lg mb-2">Growth</h4>
+                            <div class="text-2xl font-bold mb-2">$499<span class="text-base">/mo</span></div>
+                            <p class="text-sm text-[#7EB5D6] mb-4">For Small teams</p>
+                            <ul class="text-sm space-y-2">
+                                <li>Everything in Starter + Cerbos RBAC</li>
+                                <li>Installer wizard, CLI, SDKs (TS/Py)</li>
+                                <li>3 projects</li>
+                                <li>Email support (48h)</li>
+                                <li>Security patches</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-[#37475A] rounded-lg p-6 border border-[#546979]">
+                            <h4 class="font-bold text-lg mb-2">Scale</h4>
+                            <div class="text-2xl font-bold mb-2">$999<span class="text-base">/mo</span></div>
+                            <p class="text-sm text-[#7EB5D6] mb-4">For Agencies/multi-apps</p>
+                            <ul class="text-sm space-y-2">
+                                <li>Unlimited projects</li>
+                                <li>Advanced modules (Temporal/RDS, Meilisearch)</li>
+                                <li>Priority support (24h)</li>
+                                <li>CI/CD templates</li>
+                                <li>Cost guardrails</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-[#37475A] rounded-lg p-6 border border-[#546979]">
+                            <h4 class="font-bold text-lg mb-2">Enterprise</h4>
+                            <div class="text-2xl font-bold mb-2">$1,999+<span class="text-base">/mo</span></div>
+                            <p class="text-sm text-[#7EB5D6] mb-4">For Compliance/large orgs</p>
+                            <ul class="text-sm space-y-2">
+                                <li>All Scale features</li>
+                                <li>SSO/SCIM integration</li>
+                                <li>Private registry</li>
+                                <li>Architecture reviews</li>
+                                <li>SLAs</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="text-center">
-                <h4 class="font-bold text-lg mb-4">Add-ons (One-time)</h4>
-                <div class="grid md:grid-cols-3 gap-4 max-w-4xl mx-auto">
-                    <div class="bg-[#37475A] rounded-lg p-4">
-                        <p class="font-medium">White-glove install + handover</p>
-                        <p class="text-[#7EB5D6]">$4,995</p>
-                    </div>
-                    <div class="bg-[#37475A] rounded-lg p-4">
-                        <p class="font-medium">Custom feature pack (per module)</p>
-                        <p class="text-[#7EB5D6]">from $3,000</p>
-                    </div>
-                    <div class="bg-[#37475A] rounded-lg p-4">
-                        <p class="font-medium">Training (½-day)</p>
-                        <p class="text-[#7EB5D6]">$1,200</p>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
 
@@ -594,15 +598,23 @@ $ serverlesskit deploy --mode=hosted
             errorMessage.classList.add('hidden');
 
             try {
-                // Submit to Google Sheets
+                // Submit to Google Sheets using FormData for better compatibility
+                const formData = new FormData();
+                formData.append('email', data.email);
+                formData.append('name', data.name);
+                formData.append('company', data.company);
+                formData.append('useCase', data.useCase);
+                formData.append('timestamp', data.timestamp);
+                formData.append('source', data.source);
+
                 const response = await fetch(GOOGLE_SHEETS_URL, {
                     method: 'POST',
-                    mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data)
+                    body: formData
                 });
+
+                // For Google Apps Script, we can't read the response due to CORS
+                // But if the fetch doesn't throw an error, it likely succeeded
+                console.log('Form submitted successfully');
 
                 // Show success message
                 formMessage.classList.remove('hidden');
@@ -676,6 +688,40 @@ $ serverlesskit deploy --mode=hosted
         document.querySelectorAll('.feature-card, .gradient-bg, .bg-gray-50').forEach(el => {
             observer.observe(el);
         });
+
+        // Pricing tabs functionality
+        const hostedTab = document.getElementById('hosted-tab');
+        const byocTab = document.getElementById('byoc-tab');
+        const hostedContent = document.getElementById('hosted-content');
+        const byocContent = document.getElementById('byoc-content');
+
+        function switchToHosted() {
+            // Update tab styles
+            hostedTab.classList.add('bg-[#FF9900]', 'text-[#232F3E]');
+            hostedTab.classList.remove('text-[#7EB5D6]');
+            byocTab.classList.remove('bg-[#FF9900]', 'text-[#232F3E]');
+            byocTab.classList.add('text-[#7EB5D6]');
+
+            // Update content visibility
+            hostedContent.classList.remove('hidden');
+            byocContent.classList.add('hidden');
+        }
+
+        function switchToBYOC() {
+            // Update tab styles
+            byocTab.classList.add('bg-[#FF9900]', 'text-[#232F3E]');
+            byocTab.classList.remove('text-[#7EB5D6]');
+            hostedTab.classList.remove('bg-[#FF9900]', 'text-[#232F3E]');
+            hostedTab.classList.add('text-[#7EB5D6]');
+
+            // Update content visibility
+            byocContent.classList.remove('hidden');
+            hostedContent.classList.add('hidden');
+        }
+
+        // Add event listeners
+        hostedTab.addEventListener('click', switchToHosted);
+        byocTab.addEventListener('click', switchToBYOC);
     </script>
 </body>
 </html>
