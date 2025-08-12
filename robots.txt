@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://serverlesskit.com/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+
+# Block access to sensitive files
+Disallow: /google-apps-script.js
+Disallow: /deploy.sh
+Disallow: /deployment-checklist.md
+Disallow: /.git/
+Disallow: /.github/
