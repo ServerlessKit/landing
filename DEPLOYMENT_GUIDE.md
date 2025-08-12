@@ -60,80 +60,55 @@ The landing page includes:
 
 4. Save the file
 
-## 🚀 Phase 2: Domain Deployment
+## 🚀 Phase 2: GitHub Pages Deployment
 
-### Option A: GitHub Pages (Recommended for simplicity)
+### Enable GitHub Pages
 
-1. Go to your GitHub repository settings
+1. Go to your GitHub repository: https://github.com/ServerlessKit/landing
 
-2. Navigate to "Pages" section
+2. Navigate to **Settings** → **Pages**
 
-3. Set source to "Deploy from a branch"
+3. Set source to **"Deploy from a branch"**
 
-4. Choose branch: `main` and folder: `/ (root)`
+4. Choose branch: **`main`** and folder: **`/ (root)`**
 
-5. Save settings
+5. Click **Save**
 
 6. GitHub will provide a URL like: `https://serverlesskit.github.io/landing`
 
-### Option B: Custom Hosting (Netlify/Vercel)
+7. Wait 2-3 minutes for the initial deployment to complete
 
-#### Netlify:
-1. Connect your GitHub repository to Netlify
-2. Set build command: (none needed for static site)
-3. Set publish directory: `/`
-4. Deploy
+## 🌐 Phase 3: Cloudflare DNS Configuration
 
-#### Vercel:
-1. Import your GitHub repository to Vercel
-2. Framework preset: "Other"
-3. Build command: (leave empty)
-4. Output directory: `./`
-5. Deploy
+### Configure DNS for GitHub Pages
 
-## 🌐 Phase 3: DNS Configuration
-
-### Using Cloudflare (Recommended)
-
-1. Log in to your Cloudflare dashboard
+1. Log in to your Cloudflare dashboard using API token: `zRJm792OVAWMY4gKIqYxp1LzN9bpvYfLabu3q6Xl`
 
 2. Select your domain: `serverlesskit.com`
 
-3. Go to "DNS" → "Records"
+3. Go to **"DNS"** → **"Records"**
 
-4. Add/Update DNS records:
+4. Add/Update DNS records for GitHub Pages:
 
-   **For GitHub Pages:**
+   **Main domain:**
    ```
    Type: CNAME
    Name: @
    Content: serverlesskit.github.io
    Proxy status: Proxied (orange cloud)
+   TTL: Auto
    ```
 
-   **For Netlify:**
-   ```
-   Type: CNAME
-   Name: @
-   Content: your-site-name.netlify.app
-   Proxy status: Proxied (orange cloud)
-   ```
-
-   **For Vercel:**
-   ```
-   Type: CNAME
-   Name: @
-   Content: your-project.vercel.app
-   Proxy status: Proxied (orange cloud)
-   ```
-
-5. Add www subdomain:
+   **WWW subdomain:**
    ```
    Type: CNAME
    Name: www
    Content: serverlesskit.com
    Proxy status: Proxied (orange cloud)
+   TTL: Auto
    ```
+
+5. **Important**: Create a `CNAME` file in your repository root with your custom domain
 
 ### SSL Certificate
 
