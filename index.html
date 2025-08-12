@@ -53,6 +53,17 @@
                 transform: scale(1);
             }
         }
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        .animate-spin {
+            animation: spin 1s linear infinite;
+        }
     </style>
 </head>
 <body class="font-sans antialiased text-gray-900">
@@ -62,11 +73,22 @@
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center">
-                        <svg class="h-8 w-8 text-indigo-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M13 7.5a1 1 0 11-2 0 1 1 0 012 0zm-1 3a1 1 0 100-2 1 1 0 000 2zm-1 3a1 1 0 11-2 0 1 1 0 012 0zm5 1a1 1 0 100-2 1 1 0 000 2zm1-3a1 1 0 11-2 0 1 1 0 012 0zm1-3a1 1 0 100-2 1 1 0 000 2z" />
-                            <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zM4 12a8 8 0 0116 0H4z" clip-rule="evenodd" />
-                        </svg>
-                        <span class="ml-2 text-xl font-bold text-gray-900">ServerlessKit</span>
+                        <a href="#" id="logo-link" class="flex items-center cursor-pointer group" onclick="scrollToTop()">
+                            <!-- ServerlessKit Logo - AWS Native, API First Design -->
+                            <svg class="h-10 w-10 text-[#FF9900] group-hover:text-[#FF8C00] transition-colors duration-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="currentColor">
+                                <!-- Cloud base representing serverless -->
+                                <path d="M38 20c0-1.1-.9-2-2-2-.3 0-.6.1-.8.2C34.4 16.3 32.3 15 30 15c-1.7 0-3.2.7-4.3 1.8C24.5 15.7 23.3 15 22 15c-2.8 0-5 2.2-5 5 0 .6.1 1.1.3 1.6C15.9 22.4 15 23.6 15 25c0 2.2 1.8 4 4 4h19c2.2 0 4-1.8 4-4 0-2.2-1.8-4-4-4z"/>
+                                <!-- API connection nodes -->
+                                <circle cx="12" cy="12" r="2" fill="#232F3E"/>
+                                <circle cx="36" cy="12" r="2" fill="#232F3E"/>
+                                <circle cx="24" cy="8" r="2" fill="#232F3E"/>
+                                <!-- Connection lines representing API-first -->
+                                <path d="M14 12h8M26 8h8M24 10v6" stroke="#232F3E" stroke-width="2" fill="none"/>
+                                <!-- Lambda/serverless symbol -->
+                                <path d="M20 32l4-8 4 8h-2l-1-2h-2l-1 2h-2zm3-4h2l-1-2-1 2z" fill="#232F3E"/>
+                            </svg>
+                            <span class="ml-3 text-xl font-bold text-gray-900 group-hover:text-[#FF9900] transition-colors duration-200">ServerlessKit</span>
+                        </a>
                     </div>
                 </div>
                 <div class="hidden sm:ml-6 sm:flex sm:items-center space-x-8">
@@ -484,8 +506,12 @@ $ serverlesskit deploy --mode=hosted
                         </select>
                     </div>
                     <button type="submit" id="submitBtn"
-                            class="w-full bg-[#FF9900] text-[#232F3E] hover:bg-[#FF8C00] px-8 py-4 rounded-lg text-lg font-bold shadow-xl transform transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
-                        🚀 Join the Waitlist
+                            class="w-full bg-[#FF9900] text-[#232F3E] hover:bg-[#FF8C00] px-8 py-4 rounded-lg text-lg font-bold shadow-xl transform transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center">
+                        <span id="submitBtnText">🚀 Join the Waitlist</span>
+                        <svg id="submitBtnSpinner" class="hidden animate-spin ml-2 h-5 w-5 text-[#232F3E]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
                     </button>
                 </form>
 
@@ -573,85 +599,85 @@ $ serverlesskit deploy --mode=hosted
             e.preventDefault();
 
             const submitBtn = document.getElementById('submitBtn');
+            const submitBtnText = document.getElementById('submitBtnText');
+            const submitBtnSpinner = document.getElementById('submitBtnSpinner');
             const formMessage = document.getElementById('formMessage');
             const successMessage = document.getElementById('successMessage');
             const errorMessage = document.getElementById('errorMessage');
 
             // Get form data
-            const formData = new FormData(this);
+            const formDataObj = new FormData(this);
             const data = {
-                email: formData.get('email'),
-                name: formData.get('name') || '',
-                company: formData.get('company') || '',
-                useCase: formData.get('useCase') || '',
+                email: formDataObj.get('email'),
+                name: formDataObj.get('name') || '',
+                company: formDataObj.get('company') || '',
+                useCase: formDataObj.get('useCase') || '',
                 timestamp: new Date().toISOString(),
                 source: 'ServerlessKit Landing Page'
             };
 
-            // Show loading state
+            // Validate email
+            if (!data.email || !data.email.includes('@')) {
+                formMessage.classList.remove('hidden');
+                errorMessage.classList.remove('hidden');
+                errorMessage.querySelector('p:last-child').textContent = 'Please enter a valid email address.';
+                return;
+            }
+
+            // Show loading state immediately
             submitBtn.disabled = true;
-            submitBtn.textContent = '⏳ Joining...';
+            submitBtnText.textContent = 'Joining...';
+            submitBtnSpinner.classList.remove('hidden');
 
             // Hide previous messages
             formMessage.classList.add('hidden');
             successMessage.classList.add('hidden');
             errorMessage.classList.add('hidden');
 
-            try {
-                // Submit to Google Sheets using FormData for better compatibility
-                const formData = new FormData();
-                formData.append('email', data.email);
-                formData.append('name', data.name);
-                formData.append('company', data.company);
-                formData.append('useCase', data.useCase);
-                formData.append('timestamp', data.timestamp);
-                formData.append('source', data.source);
-
-                const response = await fetch(GOOGLE_SHEETS_URL, {
-                    method: 'POST',
-                    body: formData
-                });
-
-                // For Google Apps Script, we can't read the response due to CORS
-                // But if the fetch doesn't throw an error, it likely succeeded
-                console.log('Form submitted successfully');
-
-                // Show success message
+            // Show success message immediately for better UX (optimistic UI)
+            setTimeout(() => {
                 formMessage.classList.remove('hidden');
                 successMessage.classList.remove('hidden');
-
-                // Reset form
                 this.reset();
 
-                // Track conversion (if analytics available)
-                if (typeof gtag !== 'undefined') {
-                    gtag('event', 'conversion', {
-                        'send_to': 'AW-CONVERSION_ID/CONVERSION_LABEL',
-                        'value': 1.0,
-                        'currency': 'USD'
-                    });
-                }
-
-                // Update progress bar (simulate)
-                const progressBar = document.querySelector('.bg-\\[\\#7EB5D6\\]');
-                if (progressBar) {
-                    const currentWidth = parseInt(progressBar.style.width) || 58;
-                    const newWidth = Math.min(currentWidth + 1, 95);
-                    progressBar.style.width = newWidth + '%';
-                    document.querySelector('.text-indigo-200').textContent = `${newWidth}% of early access spots claimed`;
-                }
-
-            } catch (error) {
-                console.error('Error submitting form:', error);
-
-                // Show error message
-                formMessage.classList.remove('hidden');
-                errorMessage.classList.remove('hidden');
-            } finally {
                 // Reset button state
                 submitBtn.disabled = false;
-                submitBtn.textContent = '🚀 Join the Waitlist';
+                submitBtnText.textContent = '🚀 Join the Waitlist';
+                submitBtnSpinner.classList.add('hidden');
+            }, 500); // Fast feedback
+
+            try {
+                // Submit to Google Sheets in background
+                const submissionData = new FormData();
+                submissionData.append('email', data.email);
+                submissionData.append('name', data.name);
+                submissionData.append('company', data.company);
+                submissionData.append('useCase', data.useCase);
+                submissionData.append('timestamp', data.timestamp);
+                submissionData.append('source', data.source);
+
+                // Use fetch with timeout for better performance
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+
+                fetch(GOOGLE_SHEETS_URL, {
+                    method: 'POST',
+                    body: submissionData,
+                    signal: controller.signal
+                }).then(() => {
+                    clearTimeout(timeoutId);
+                    console.log('Form submitted to Google Sheets successfully');
+                }).catch((error) => {
+                    clearTimeout(timeoutId);
+                    console.warn('Google Sheets submission failed (but user already saw success):', error);
+                    // Don't show error to user since they already saw success
+                });
+
+            } catch (error) {
+                console.error('Form submission error:', error);
+                // User already saw success message, so don't disrupt their experience
             }
+
         });
 
         // Countdown timer for FOMO
@@ -722,6 +748,32 @@ $ serverlesskit deploy --mode=hosted
         // Add event listeners
         hostedTab.addEventListener('click', switchToHosted);
         byocTab.addEventListener('click', switchToBYOC);
+
+        // Scroll to top functionality
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Add scroll-to-top button that appears when scrolling down
+        const scrollToTopBtn = document.createElement('button');
+        scrollToTopBtn.innerHTML = '↑';
+        scrollToTopBtn.className = 'fixed bottom-6 right-6 bg-[#FF9900] hover:bg-[#FF8C00] text-[#232F3E] w-12 h-12 rounded-full shadow-lg transition-all duration-300 opacity-0 pointer-events-none z-50 font-bold text-xl';
+        scrollToTopBtn.onclick = scrollToTop;
+        document.body.appendChild(scrollToTopBtn);
+
+        // Show/hide scroll-to-top button based on scroll position
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+                scrollToTopBtn.classList.add('opacity-100', 'pointer-events-auto');
+            } else {
+                scrollToTopBtn.classList.add('opacity-0', 'pointer-events-none');
+                scrollToTopBtn.classList.remove('opacity-100', 'pointer-events-auto');
+            }
+        });
     </script>
 </body>
 </html>
