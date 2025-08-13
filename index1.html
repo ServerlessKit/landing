@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ServerlessKit | Build, Launch, and Scale SaaS Products 10x Faster</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'aws-orange': '#FF9900',
+                        'aws-dark': '#232F3E',
+                        'aws-blue': '#146EB4',
+                        'aws-light': '#F2F3F3',
+                        'aws-green': '#008D5A',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #232F3E 0%, #146EB4 100%);
+        }
+        .dashboard-mockup {
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            overflow: hidden;
+            transform: perspective(1000px) rotateX(10deg);
+        }
+        .connector-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .pricing-tab.active {
+            background-color: #146EB4;
+            color: white;
+        }
+        .pricing-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        .popular-badge {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="font-sans bg-aws-light text-aws-dark">
+    <!-- Navigation -->
+    <nav class="bg-aws-dark text-white py-4 px-6 shadow-lg">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fab fa-aws text-aws-orange text-2xl"></i>
+                <span class="text-xl font-bold">Serverless<span class="text-aws-orange">Kit</span></span>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#features" class="hover:text-aws-orange transition">Features</a>
+                <a href="#pricing" class="hover:text-aws-orange transition">Pricing</a>
+                <a href="#testimonials" class="hover:text-aws-orange transition">Testimonials</a>
+                <a href="#faq" class="hover:text-aws-orange transition">FAQ</a>
+            </div>
+            <div class="flex space-x-4">
+                <a href="#waitlist" class="bg-aws-orange hover:bg-yellow-600 text-white px-4 py-2 rounded-md font-medium transition">Join Waitlist</a>
+                <button class="md:hidden text-white">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg text-white py-20 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center">
+            <div class="lg:w-1/2 mb-12 lg:mb-0">
+                <div class="mb-6">
+                    <span class="bg-aws-orange text-white px-3 py-1 rounded-full text-sm font-medium">Exclusive Early Access</span>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">Build, Launch, and Scale SaaS Products <span class="text-aws-orange">10x Faster</span></h1>
+                <p class="text-xl mb-8 opacity-90">AWS-native SaaS platform with everything you need — ready on day one. No infrastructure headaches.</p>
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="#waitlist" class="bg-aws-orange hover:bg-yellow-600 text-white px-6 py-3 rounded-md font-medium text-center transition">Join the First 500 →</a>
+                    <a href="#demo" class="bg-white hover:bg-gray-100 text-aws-dark px-6 py-3 rounded-md font-medium text-center transition">Book a Demo</a>
+                </div>
+                <div class="mt-8 bg-aws-dark bg-opacity-40 p-4 rounded-lg inline-block">
+                    <div class="flex items-center">
+                        <div class="relative">
+                            <div class="h-2 w-32 bg-gray-600 rounded-full overflow-hidden">
+                                <div class="h-full bg-aws-orange rounded-full" style="width: 75%"></div>
+                            </div>
+                            <div class="text-xs mt-1">Spots left in Founders' Offer: <span class="font-bold">125/500</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="lg:w-1/2 flex justify-center">
+                <div class="dashboard-mockup w-full max-w-xl">
+                    <div class="bg-white p-1">
+                        <div class="flex space-x-2 p-2 border-b">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex mb-4">
+                                <div class="w-1/4 bg-aws-blue text-white p-2 text-center rounded-l">Analytics</div>
+                                <div class="w-1/4 bg-gray-200 p-2 text-center">API Calls</div>
+                                <div class="w-1/4 bg-gray-200 p-2 text-center">Billing</div>
+                                <div class="w-1/4 bg-gray-200 p-2 text-center rounded-r">Connectors</div>
+                            </div>
+                            <div class="grid grid-cols-12 gap-4 mb-4">
+                                <div class="col-span-8 bg-gray-100 p-4 rounded-lg">
+                                    <div class="h-48 bg-gradient-to-r from-aws-blue to-aws-green rounded"></div>
+                                </div>
+                                <div class="col-span-4 bg-gray-100 p-4 rounded-lg">
+                                    <div class="h-48 bg-gradient-to-b from-aws-orange to-yellow-300 rounded"></div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-12 gap-4">
+                                <div class="col-span-4 bg-gray-100 p-4 rounded-lg">
+                                    <div class="h-32 bg-gradient-to-b from-purple-500 to-pink-500 rounded"></div>
+                                </div>
+                                <div class="col-span-4 bg-gray-100 p-4 rounded-lg">
+                                    <div class="h-32 bg-gradient-to-b from-green-500 to-teal-400 rounded"></div>
+                                </div>
+                                <div class="col-span-4 bg-gray-100 p-4 rounded-lg">
+                                    <div class="h-32 bg-gradient-to-b from-red-500 to-orange-500 rounded"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Logo Cloud -->
+    <section class="py-12 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <p class="text-center text-gray-500 mb-8">Trusted by teams building the next generation of SaaS</p>
+            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16">
+                <div class="text-3xl font-bold text-gray-700">Stripe</div>
+                <div class="text-3xl font-bold text-blue-600">AWS</div>
+                <div class="text-3xl font-bold text-green-600">HubSpot</div>
+                <div class="text-3xl font-bold text-blue-500">Salesforce</div>
+                <div class="text-3xl font-bold text-red-500">Jira</div>
+                <div class="text-3xl font-bold text-purple-600">OpenAI</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why ServerlessKit -->
+    <section id="features" class="py-20 bg-gray-50 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Why ServerlessKit Exists</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">If you've ever tried to launch a SaaS on AWS, you know the pain:</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <div class="bg-white p-8 rounded-xl shadow-md">
+                    <div class="text-aws-orange text-4xl mb-4">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Weeks Lost on Boilerplate</h3>
+                    <p class="text-gray-600">Months wasted on repetitive infrastructure setup instead of building your core product.</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-md">
+                    <div class="text-aws-orange text-4xl mb-4">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">AWS Configuration Headaches</h3>
+                    <p class="text-gray-600">Endless IAM roles, VPC configurations, and service limits slowing you down.</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-md">
+                    <div class="text-aws-orange text-4xl mb-4">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Everything Built From Scratch</h3>
+                    <p class="text-gray-600">Authentication, billing, analytics, RBAC — all requiring custom implementation.</p>
+                </div>
+            </div>
+            
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">ServerlessKit Eliminates All of That</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">The API-first, AWS-native, multitenant SaaS platform that delivers everything you need — ready on day one.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- What You Get -->
+    <section class="py-20 bg-white px-6">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center">What You Get From Day One</h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                    <div class="text-aws-blue text-3xl mb-4">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">One-Click SaaS Deployment</h3>
+                    <p class="text-gray-600">Hosted by us or in your own AWS account with full infrastructure as code.</p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                    <div class="text-aws-blue text-3xl mb-4">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Full Multitenancy</h3>
+                    <p class="text-gray-600">Workspaces, team invites, role-based access control (RBAC), and SSO-ready.</p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                    <div class="text-aws-blue text-3xl mb-4">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Built-in Metered Billing</h3>
+                    <p class="text-gray-600">Stripe integration ready from day one with usage-based pricing models.</p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                    <div class="text-aws-blue text-3xl mb-4">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Usage Analytics</h3>
+                    <p class="text-gray-600">Umami analytics preconfigured so you know exactly what's happening.</p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                    <div class="text-aws-blue text-3xl mb-4">
+                        <i class="fas fa-plug"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Connector Framework</h3>
+                    <p class="text-gray-600">Prebuilt integrations for Google, Microsoft, Salesforce, Jira, and more.</p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                    <div class="text-aws-blue text-3xl mb-4">
+                        <i class="fas fa-expand"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Scalable API-first Architecture</h3>
+                    <p class="text-gray-600">Perfect for rapid feature iteration and third-party integrations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admin Dashboard Mockup -->
+    <section class="py-20 bg-gray-50 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-12 lg:mb-0 lg:pr-12">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Multi-Tenant Admin Dashboard</h2>
+                    <p class="text-xl text-gray-600 mb-8">Complete control over your SaaS tenants, workspaces, and user permissions with our intuitive admin interface.</p>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <div class="text-aws-green text-xl mr-3 mt-1">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <span class="text-gray-700">Create and manage multiple tenant workspaces</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="text-aws-green text-xl mr-3 mt-1">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <span class="text-gray-700">Invite team members with granular permissions</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="text-aws-green text-xl mr-3 mt-1">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <span class="text-gray-700">Monitor API usage and billing in real-time</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="text-aws-green text-xl mr-3 mt-1">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <span class="text-gray-700">Configure SSO and enterprise security settings</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="lg:w-1/2">
+                    <div class="dashboard-mockup">
+                        <div class="bg-white p-1">
+                            <div class="flex space-x-2 p-2 border-b">
+                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            </div>
+                            <div class="p-4">
+                                <div class="flex mb-4">
+                                    <div class="w-1/5 bg-aws-blue text-white p-2 text-center rounded-l">Tenants</div>
+                                    <div class="w-1/5 bg-gray-200 p-2 text-center">Workspaces</div>
+                                    <div class="w-1/5 bg-gray-200 p-2 text-center">Usage</div>
+                                    <div class="w-1/5 bg-gray-200 p-2 text-center">Billing</div>
+                                    <div class="w-1/5 bg-gray-200 p-2 text-center rounded-r">Connectors</div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <h3 class="font-bold">Workspaces</h3>
+                                        <button class="bg-aws-blue text-white px-3 py-1 rounded text-sm">New Workspace</button>
+                                    </div>
+                                    <div class="bg-gray-100 rounded-lg p-4">
+                                        <div class="flex items-center mb-3">
+                                            <div class="w-8 h-8 rounded-full bg-aws-orange flex items-center justify-center text-white mr-3">A</div>
+                                            <div>
+                                                <div class="font-medium">Acme Corp</div>
+                                                <div class="text-xs text-gray-500">3 members • 5 projects</div>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center mb-3">
+                                            <div class="w-8 h-8 rounded-full bg-aws-blue flex items-center justify-center text-white mr-3">B</div>
+                                            <div>
+                                                <div class="font-medium">Beta LLC</div>
+                                                <div class="text-xs text-gray-500">12 members • 8 projects</div>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <div class="w-8 h-8 rounded-full bg-aws-green flex items-center justify-center text-white mr-3">C</div>
+                                            <div>
+                                                <div class="font-medium">Gamma Inc</div>
+                                                <div class="text-xs text-gray-500">1 member • 1 project</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-gray-100 rounded-lg p-4">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <h3 class="font-bold">Invite New Members</h3>
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="email" placeholder="email@company.com" class="w-full p-2 border rounded">
+                                    </div>
+                                    <div class="grid grid-cols-3 gap-2 mb-3">
+                                        <div class="border rounded p-2 text-center text-sm">Admin</div>
+                                        <div class="border rounded p-2 text-center text-sm bg-aws-blue text-white">Developer</div>
+                                        <div class="border rounded p-2 text-center text-sm">Viewer</div>
+                                    </div>
+                                    <button class="w-full bg-aws-blue text-white py-2 rounded">Send Invite</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Connector Marketplace -->
+    <section class="py-20 bg-white px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Connector Marketplace</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Prebuilt integrations for popular services with "Verified" and "Community" labels.</p>
+            </div>
+            
+            <div class="mb-8">
+                <div class="relative max-w-xl mx-auto">
+                    <input type="text" placeholder="Search connectors..." class="w-full p-4 pl-12 rounded-lg border border-gray-300 focus:border-aws-blue focus:ring-2 focus:ring-aws-blue">
+                    <div class="absolute left-4 top-4 text-gray-400">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+                <div class="flex justify-center mt-4 space-x-2">
+                    <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">All</span>
+                    <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">Verified</span>
+                    <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">CRM</span>
+                    <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">AI</span>
+                    <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">Productivity</span>
+                </div>
+            </div>
+            
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="connector-card bg-white border border-gray-200 rounded-xl p-6 transition duration-300">
+                    <div class="flex items-start mb-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fab fa-google text-blue-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">Google Workspace</h3>
+                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Verified</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">Connect to Gmail, Drive, Calendar, and other Google services with OAuth 2.0.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">By ServerlessKit Team</span>
+                        <button class="text-aws-blue text-sm font-medium">Add Integration</button>
+                    </div>
+                </div>
+                <div class="connector-card bg-white border border-gray-200 rounded-xl p-6 transition duration-300">
+                    <div class="flex items-start mb-4">
+                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fab fa-microsoft text-purple-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">Microsoft 365</h3>
+                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Verified</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">Integrate with Outlook, OneDrive, Teams, and SharePoint APIs.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">By ServerlessKit Team</span>
+                        <button class="text-aws-blue text-sm font-medium">Add Integration</button>
+                    </div>
+                </div>
+                <div class="connector-card bg-white border border-gray-200 rounded-xl p-6 transition duration-300">
+                    <div class="flex items-start mb-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fab fa-salesforce text-blue-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">Salesforce</h3>
+                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Verified</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">Sync contacts, leads, and opportunities with your Salesforce instance.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">By ServerlessKit Team</span>
+                        <button class="text-aws-blue text-sm font-medium">Add Integration</button>
+                    </div>
+                </div>
+                <div class="connector-card bg-white border border-gray-200 rounded-xl p-6 transition duration-300">
+                    <div class="flex items-start mb-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fab fa-jira text-blue-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">Jira Cloud</h3>
+                            <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">Community</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">Create and track Jira issues from your application with webhooks.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">By @devuser123</span>
+                        <button class="text-aws-blue text-sm font-medium">Add Integration</button>
+                    </div>
+                </div>
+                <div class="connector-card bg-white border border-gray-200 rounded-xl p-6 transition duration-300">
+                    <div class="flex items-start mb-4">
+                        <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-shopping-cart text-orange-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">HubSpot CRM</h3>
+                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Verified</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">Manage contacts, companies, deals, and tickets in HubSpot.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">By ServerlessKit Team</span>
+                        <button class="text-aws-blue text-sm font-medium">Add Integration</button>
+                    </div>
+                </div>
+                <div class="connector-card bg-white border border-gray-200 rounded-xl p-6 transition duration-300">
+                    <div class="flex items-start mb-4">
+                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-robot text-purple-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">OpenAI</h3>
+                            <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">Community</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">Add AI capabilities with GPT-3, Codex, and DALL·E integration.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">By @airesearcher</span>
+                        <button class="text-aws-blue text-sm font-medium">Add Integration</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <button class="bg-aws-dark hover:bg-gray-800 text-white px-6 py-3 rounded-md font-medium transition">Browse All Connectors</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leaderboard -->
+    <section class="py-20 bg-gray-50 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Community Leaderboard</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Top contributors ranked by number of connectors submitted & approved</p>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-md overflow-hidden max-w-4xl mx-auto">
+                <div class="grid grid-cols-12 bg-gray-100 p-4 font-bold">
+                    <div class="col-span-1">Rank</div>
+                    <div class="col-span-6">Contributor</div>
+                    <div class="col-span-3">Connectors</div>
+                    <div class="col-span-2">Approved</div>
+                </div>
+                <div class="divide-y divide-gray-200">
+                    <div class="grid grid-cols-12 p-4 items-center">
+                        <div class="col-span-1">
+                            <div class="w-8 h-8 bg-aws-orange text-white rounded-full flex items-center justify-center">1</div>
+                        </div>
+                        <div class="col-span-6 flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-4">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div>
+                                <div class="font-medium">devuser123</div>
+                                <div class="text-sm text-gray-500">AWS Solutions Architect</div>
+                            </div>
+                        </div>
+                        <div class="col-span-3">
+                            <div class="flex items-center">
+                                <div class="w-full bg-gray-200 rounded-full h-2.5 mr-2">
+                                    <div class="bg-aws-blue h-2.5 rounded-full" style="width: 85%"></div>
+                                </div>
+                                <span class="text-sm font-medium">17</span>
+                            </div>
+                        </div>
+                        <div class="col-span-2">
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">12</span>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-12 p-4 items-center">
+                        <div class="col-span-1">
+                            <div class="w-8 h-8 bg-yellow-500 text-white rounded-full flex items-center justify-center">2</div>
+                        </div>
+                        <div class="col-span-6 flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mr-4">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div>
+                                <div class="font-medium">airesearcher</div>
+                                <div class="text-sm text-gray-500">ML Engineer</div>
+                            </div>
+                        </div>
+                        <div class="col-span-3">
+                            <div class="flex items-center">
+                                <div class="w-full bg-gray-200 rounded-full h-2.5 mr-2">
+                                    <div class="bg-aws-blue h-2.5 rounded-full" style="width: 70%"></div>
+                                </div>
+                                <span class="text-sm font-medium">14</span>
+                            </div>
+                        </div>
+                        <div class="col-span-2">
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">9</span>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-12 p-4 items-center">
+                        <div class="col-span-1">
+                            <div class="w-8 h-8 bg-yellow-400 text-white rounded-full flex items-center justify-center">3</div>
+                        </div>
+                        <div class="col-span-6 flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 mr-4">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div>
+                                <div class="font-medium">saasbuilder</div>
+                                <div class="text-sm text-gray-500">Founder, SaaS Company</div>
+                            </div>
+                        </div>
+                        <div class="col-span-3">
+                            <div class="flex items-center">
+                                <div class="w-full bg-gray-200 rounded-full h-2.5 mr-2">
+                                    <div class="bg-aws-blue h-2.5 rounded-full" style="width: 60%"></div>
+                                </div>
+                                <span class="text-sm font-medium">12</span>
+                            </div>
+                        </div>
+                        <div class="col-span-2">
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">8</span>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-12 p-4 items-center">
+                        <div class="col-span-1">
+                            <div class="w-8 h-8 bg-gray-300 text-gray-700 rounded-full flex items-center justify-center">4</div>
+                        </div>
+                        <div class="col-span-6 flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-red-600 mr-4">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div>
+                                <div class="font-medium">cloudguru</div>
+                                <div class="text-sm text-gray-500">DevOps Engineer</div>
+                            </div>
+                        </div>
+                        <div class="col-span-3">
+                            <div class="flex items-center">
+                                <div class="w-full bg-gray-200 rounded-full h-2.5 mr-2">
+                                    <div class="bg-aws-blue h-2.5 rounded-full" style="width: 50%"></div>
+                                </div>
+                                <span class="text-sm font-medium">10</span>
+                            </div>
+                        </div>
+                        <div class="col-span-2">
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">7</span>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-12 p-4 items-center">
+                        <div class="col-span-1">
+                            <div class="w-8 h-8 bg-gray-300 text-gray-700 rounded-full flex items-center justify-center">5</div>
+                        </div>
+                        <div class="col-span-6 flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center text-teal-600 mr-4">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div>
+                                <div class="font-medium">apidev</div>
+                                <div class="text-sm text-gray-500">API Specialist</div>
+                            </div>
+                        </div>
+                        <div class="col-span-3">
+                            <div class="flex items-center">
+                                <div class="w-full bg-gray-200 rounded-full h-2.5 mr-2">
+                                    <div class="bg-aws-blue h-2.5 rounded-full" style="width: 45%"></div>
+                                </div>
+                                <span class="text-sm font-medium">9</span>
+                            </div>
+                        </div>
+                        <div class="col-span-2">
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">6</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <button class="bg-aws-dark hover:bg-gray-800 text-white px-6 py-3 rounded-md font-medium transition">Contribute Your Connector</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="py-20 bg-white px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Simple, Predictable Pricing</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Choose between our managed cloud or bring your own AWS account</p>
+            </div>
+            
+            <div class="flex justify-center mb-12">
+                <div class="inline-flex rounded-md shadow-sm">
+                    <button id="hosted-tab" class="pricing-tab active px-6 py-3 text-sm font-medium rounded-l-lg">Hosted (Our Cloud)</button>
+                    <button id="byoc-tab" class="pricing-tab px-6 py-3 text-sm font-medium rounded-r-lg">BYOC (Your Cloud)</button>
+                </div>
+            </div>
+            
+            <!-- Hosted Pricing -->
+            <div id="hosted-pricing" class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="pricing-card bg-white border border-gray-200 rounded-xl p-8 transition duration-300">
+                    <h3 class="text-xl font-bold mb-2">Dev</h3>
+                    <div class="text-3xl font-bold mb-4">$299<span class="text-lg text-gray-500">/mo</span></div>
+                    <div class="text-gray-600 mb-6">50k API calls included</div>
+                    <div class="mb-6">
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-check text-aws-green mr-2"></i>
+                            <span>1 environment</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-check text-aws-green mr-2"></i>
+                            <span>Shared cluster</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-check text-aws-green mr-2"></i>
+                            <span>Email support</span>
+                        </div>
+                    </div>
+                    <button class="w-full bg-gray-100 hover:bg-gray-200 text-aws-dark py-3 rounded-md font-medium transition">Get Started</button>
+                </div>
+                <div class="pricing-card bg-white border-2 border-aws-blue rounded-xl p-8 transition duration-300 relative">
+                    <div class="popular-badge absolute -top-3 left-1/2 transform -translate-x-1/2 bg-aws-blue text-white px-4 py-1 rounded-full text-xs font-bold">Most Popular</div>
+                    <h3 class="text-xl font-bold mb-2">Team</h3>
+                    <div class="text-3xl font-bold mb-4">$799<span class="text-lg text-gray-500">/mo</span></div>
+                    <div class="text-gray-600 mb-6">250k API calls included</div>
+                    <div class="mb-6">
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-check text-aws-green mr-2"></i>
+                            <span>2 environments</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-check text-aws-green mr-2"></i>
+                            <span>Custom domain</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-check text-aws-green mr-2"></i>
+                            <span>Priority support</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-check text-aws-green mr-2"></i>
+                            <span>RBAC</span>
+                        </div>
+                    </div>
+                    <button class="w-full bg-aws-blue hover:bg-blue-700 text-white py-3 rounded-md font-medium transition">Get Started</button>
+                </div>
+                <div class="pricing-card bg-white border border-gray-200 rounded-xl p-8 transition duration-300">
+                    <h3 class="text-xl font-bold mb-2">Business</h3>
+                    <div class="text-3xl font-bold mb-4">$1,499<span class="text-lg text-gray-500">/mo</span></div>
+                    <div class="text-gray-600 mb-6">1M API calls included</div>
+                    <div class="mb-6">
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-check text-aws-green mr-2"></i>
+                            <span>3 environments</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-check text-aws-green mr-2"></i>
+                            <span>Advanced modules</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-check text-aws-green mr-2"></i>
+                            <span>24h support</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-check text-aws-green mr-2"></i>
+                            <span>Usage analytics</span>
+                        </div>
+                    </div>
+                    <button class="w-full bg-gray-100 hover:bg-gray-200 text-aws-dark py-3 rounded-md font-medium transition">Get Started</button>
+                </div>
+                <div class="pricing-card bg-white border border-gray-200 rounded-xl p-8 transition duration-300">
+                    <h3 class="text-xl font-bold mb-2">Enterprise</h3>
+                    <div class="text-3xl font-bold mb-4">$2,999+<span class="text-lg text-gray-500">/mo</span></div>
+                    <div class="text-gray-600 mb-6">2.5M+ API calls</div>
+                    <div class="mb-6">
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-check text-aws-green mr-2"></i>
+                            <span>Dedicated VPC</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-check text-aws-green mr-2"></i>
+                            <span>SSO/SCIM</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-check text-aws-green mr-2"></i>
+                            <span>SLAs</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-check text-aws-green mr-2"></i>
+                            <span>Architecture reviews</span>
+                        </div>
+                    </div>
+                    <button class="w-full bg-gray-100 hover:bg-gray-200 text-aws-dark py-3 rounded-md font-medium transition">Contact Sales</button>
+                </div>
+            </div>
+            
+            <!-- BYOC Pricing (hidden by default) -->
+            <div id="byoc-pricing" class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 hidden">
+                <div class="pricing-card bg-white border border-gray-200 rounded-xl p-8 transition duration-300">
+                    <h3 class="text-xl font-bold mb-2">Starter</h3>
+                    <div class="text-3xl font-bold mb-4">$199<span class="text-lg text-gray-500">/mo</span></div>
+                    <div class="text-gray-600 mb-6">Solo / POC</div>
+                    <div class="mb-6">
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-check text-aws-green mr-2"></i>
+                            <span>Core stack</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-check text-aws-green mr-2"></i>
+                            <span>Stripe metering</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-check text-aws-green mr-2"></i>
+                            <span>Umami analytics</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-check text-aws-green mr-2"></i>
+                            <span>1 project</span>
+                        </div>
+                    </div>
+                    <button class="w-full bg-gray-100 hover:bg-gray-200 text-aws-dark py-3 rounded-md font-medium transition">Get Started</button>
+                </div>
+                <div class="pricing-card bg-white border-2 border-aws-blue rounded-xl p-8 transition duration-300 relative">
+                    <div class="popular-badge absolute -top-3 left-1/2 transform -translate-x-1/2 bg-aws-blue text-white px-4 py-1 rounded-full text-xs font-bold">Most Popular</div>
+                    <h3 class="text-xl font-bold mb-2">Growth</h3>
+                    <div class="text-3xl font-bold mb-4">$499<span class="text-lg text-gray-500">/mo</span></div>
+                    <div class="text-gray-600 mb-6">Small teams</div>
+                    <div class="mb-6">
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-check text-aws-green mr-2"></i>
+                            <span>Starter + RBAC</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-check text-aws-green mr-2"></i>
+                            <span>CLI & SDKs</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-check text-aws-green mr-2"></i>
+                            <span>3 projects</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-check text-aws-green mr-2"></i>
+                            <span>Email support</span>
+                        </div>
+                    </div>
+                    <button class="w-full bg-aws-blue hover:bg-blue-700 text-white py-3 rounded-md font-medium transition">Get Started</button>
+                </div>
+                <div class="pricing-card bg-white border border-gray-200 rounded-xl p-8 transition duration-300">
+                    <h3 class="text-xl font-bold mb-2">Scale</h3>
+                    <div class="text-3xl font-bold mb-4">$999<span class="text-lg text-gray-500">/mo</span></div>
+                    <div class="text-gray-600 mb-6">Agencies / Multi-apps</div>
+                    <div class="mb-6">
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-check text-aws-green mr-2"></i>
+                            <span>Unlimited projects</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-check text-aws-green mr-2"></i>
+                            <span>Advanced modules</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-check text-aws-green mr-2"></i>
+                            <span>Priority support</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-check text-aws-green mr-2"></i>
+                            <span>CI/CD templates</span>
+                        </div>
+                    </div>
+                    <button class="w-full bg-gray-100 hover:bg-gray-200 text-aws-dark py-3 rounded-md font-medium transition">Get Started</button>
+                </div>
+                <div class="pricing-card bg-white border border-gray-200 rounded-xl p-8 transition duration-300">
+                    <h3 class="text-xl font-bold mb-2">Enterprise</h3>
+                    <div class="text-3xl font-bold mb-4">$1,999+<span class="text-lg text-gray-500">/mo</span></div>
+                    <div class="text-gray-600 mb-6">Compliance / Large orgs</div>
+                    <div class="mb-6">
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-check text-aws-green mr-2"></i>
+                            <span>All Scale features</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-check text-aws-green mr-2"></i>
+                            <span>SSO/SCIM</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-check text-aws-green mr-2"></i>
+                            <span>Private registry</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-check text-aws-green mr-2"></i>
+                            <span>Architecture reviews</span>
+                        </div>
+                    </div>
+                    <button class="w-full bg-gray-100 hover:bg-gray-200 text-aws-dark py-3 rounded-md font-medium transition">Contact Sales</button>
+                </div>
+            </div>
+            
+            <div class="mt-12 bg-aws-dark bg-opacity-5 p-8 rounded-xl">
+                <h3 class="text-xl font-bold mb-4 text-center">Special Offers</h3>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="text-aws-orange text-2xl mb-3">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <h4 class="font-bold mb-2">Founders' Offer</h4>
+                        <p class="text-gray-600">First 500 signups get 20% off for 12 months — this will never be repeated.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="text-aws-orange text-2xl mb-3">
+                            <i class="fab fa-github"></i>
+                        </div>
+                        <h4 class="font-bold mb-2">OSS Discount</h4>
+                        <p class="text-gray-600">30% off for verified open-source projects building on ServerlessKit.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="text-aws-orange text-2xl mb-3">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <h4 class="font-bold mb-2">Switch Credit</h4>
+                        <p class="text-gray-600">Get credit for unused months from your current boilerplate/hosting provider.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Trust Us -->
+    <section class="py-20 bg-gray-50 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Why Developers Trust Us</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-sm">
+                    <div class="text-aws-blue text-3xl mb-4">
+                        <i class="fas fa-lock-open"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Zero Vendor Lock-In</h3>
+                    <p class="text-gray-600">Hosted or BYOC, migrate anytime with full access to your infrastructure as code.</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-sm">
+                    <div class="text-aws-blue text-3xl mb-4">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Security-First</h3>
+                    <p class="text-gray-600">SSO, SCIM, RBAC, and audit-ready logging built into every layer.</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-sm">
+                    <div class="text-aws-blue text-3xl mb-4">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Performance-Obsessed</h3>
+                    <p class="text-gray-600">Serverless scaling means you only pay for what you use with no idle costs.</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-sm">
+                    <div class="text-aws-blue text-3xl mb-4">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Community Powered</h3>
+                    <p class="text-gray-600">Public connector marketplace with instant PR deployment for contributions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="waitlist" class="py-20 gradient-bg text-white px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Launch Your SaaS 10x Faster?</h2>
+            <p class="text-xl mb-8 opacity-90">Join the first 500 to lock in 20% off for 12 months. Once the limit is reached, pricing reverts to standard rates.</p>
+            
+            <div class="max-w-xl mx-auto">
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <input type="email" placeholder="Enter your email" class="flex-grow px-4 py-3 rounded-md text-gray-900">
+                    <button class="bg-aws-orange hover:bg-yellow-600 text-white px-6 py-3 rounded-md font-medium transition">Join Waitlist</button>
+                </div>
+                <div class="mt-4 text-sm opacity-80">By joining, you agree to our <a href="#" class="underline">Terms</a> and <a href="#" class="underline">Privacy Policy</a>.</div>
+            </div>
+            
+            <div class="mt-12 bg-aws-dark bg-opacity-40 p-6 rounded-lg inline-block">
+                <div class="flex items-center">
+                    <div class="mr-4">
+                        <div class="text-xs mb-1">Spots left in Founders' Offer:</div>
+                        <div class="font-bold text-lg">125/500</div>
+                    </div>
+                    <div class="relative">
+                        <div class="h-2 w-32 bg-gray-600 rounded-full overflow-hidden">
+                            <div class="h-full bg-aws-orange rounded-full" style="width: 25%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-aws-dark text-white py-12 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fab fa-aws text-aws-orange text-2xl"></i>
+                        <span class="text-xl font-bold">Serverless<span class="text-aws-orange">Kit</span></span>
+                    </div>
+                    <p class="text-gray-400">Build, launch, and scale SaaS products 10x faster without managing infrastructure.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-4">Product</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Features</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Pricing</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Connectors</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Roadmap</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-4">Resources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Documentation</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Community</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Support</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-4">Company</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">About</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Careers</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Legal</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
+                <div class="text-gray-400 mb-4 md:mb-0">© 2023 ServerlessKit. All rights reserved.</div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-github"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Pricing tabs functionality
+        document.getElementById('hosted-tab').addEventListener('click', function() {
+            document.getElementById('hosted-tab').classList.add('active');
+            document.getElementById('byoc-tab').classList.remove('active');
+            document.getElementById('hosted-pricing').classList.remove('hidden');
+            document.getElementById('byoc-pricing').classList.add('hidden');
+        });
+        
+        document.getElementById('byoc-tab').addEventListener('click', function() {
+            document.getElementById('byoc-tab').classList.add('active');
+            document.getElementById('hosted-tab').classList.remove('active');
+            document.getElementById('byoc-pricing').classList.remove('hidden');
+            document.getElementById('hosted-pricing').classList.add('hidden');
+        });
+        
+        // Mobile menu toggle would go here
+    </script>
+</body>
+</html>
